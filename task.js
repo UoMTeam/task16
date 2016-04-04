@@ -16,7 +16,7 @@ function addAqiData() {
         var city = document.getElementById("aqi-city-input").value.trim();
         var number = document.getElementById("aqi-value-input").value.trim();
         var reg1="[\u4e00-\u9fa5a-zA-Z]+";
-        var reg2="^-?[0-9]\d*$";
+        var reg2="^-?[0-9]+\d*$";
         if(city=="" || number==""){
           alert("空的？不带这么玩的");
           return;
