@@ -18,15 +18,18 @@ function addAqiData() {
         var reg1="[\u4e00-\u9fa5a-zA-Z]+";
         var reg2="^-?[0-9]+\d*$";
         if(city=="" || number==""){
-          alert("空的？不带这么玩的");
-          return;
+            document.getElementById("notify").innerText="空的？不带这么玩的";
+            //alert("空的？不带这么玩的");
+            return;
         }
         else if(!city.match(reg1)){
-            alert("城市只要中文或英文哦!");
+            document.getElementById("notify").innerText="城市只要中文或英文哦!";
+            //alert("城市只要中文或英文哦!");
             return;
         }
         else if(!number.match(reg2)){
-            alert("空气指数我只认整数哦!");
+            document.getElementById("notify").innerText="空气指数我只认整数哦!";
+            //alert("空气指数我只认整数哦!");
             return;
         }
         aqiData[city]=number;
@@ -40,11 +43,11 @@ function addAqiData() {
  */
 function renderAqiList() {
     try {
-            var output="<tr><td>城市</td><td>空气质量</td><td>操作</td></tr>";
-            for(var city in aqiData) {
-                output=output+"<tr><td>"+city+"</td><td>"+aqiData[city]+"</td><td><button  value='"+city+"'>删除</button></td></tr>"
-            }
-            document.getElementById("aqi-table").innerHTML=output;
+        var output="<tr><td>城市</td><td>空气质量</td><td>操作</td></tr>";
+        for(var city in aqiData) {
+            output=output+"<tr><td>"+city+"</td><td>"+aqiData[city]+"</td><td><button  value='"+city+"'>删除</button></td></tr>"
+        }
+        document.getElementById("aqi-table").innerHTML=output;
     } catch (err) {
         alert(err);
     }
@@ -64,6 +67,7 @@ function bind() {
  * 获取用户输入，更新数据，并进行页面呈现的更新
  */
 function addBtnHandle() {
+    document.getElementById("notify").innerText="";
     addAqiData();
     renderAqiList();
     bind();
