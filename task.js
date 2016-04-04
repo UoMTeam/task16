@@ -13,11 +13,23 @@ var aqiData = {};
  */
 function addAqiData() {
     try {
-        var city = document.getElementById("aqi-city-input").value;
-        var number = document.getElementById("aqi-value-input").value;
-        if (city != "" && number != "") {
-            aqiData[city] = number;
+        var city = document.getElementById("aqi-city-input").value.trim();
+        var number = document.getElementById("aqi-value-input").value.trim();
+        var reg1="[\u4e00-\u9fa5a-zA-Z]+";
+        var reg2="^-?[0-9]\d*$";
+        if(city=="" || number==""){
+          alert("空的？不带这么玩的");
+          return;
         }
+        else if(!city.match(reg1)){
+            alert("城市只要中文或英文哦!");
+            return;
+        }
+        else if(!number.match(reg2)){
+            alert("空气指数我只认整数哦!");
+            return;
+        }
+        aqiData[city]=number;
     } catch (err) {
         alert(err);
     }
@@ -28,12 +40,11 @@ function addAqiData() {
  */
 function renderAqiList() {
     try {
-        var output = "<tr><td>城市</td><td>空气质量</td><td>操作</td></tr>";
-        keys = Object.keys(aqiData);
-        for (var i = 0; i < keys.length; i++) {
-            output += "<tr><td>" + keys[i] + "</td><td>" + aqiData[keys[i]] + "</td><td><button value='" + keys[i] + "'>删除</button></td></tr>";
-        }
-        document.getElementById("aqi-table").innerHTML = output;
+            var output="<tr><td>城市</td><td>空气质量</td><td>操作</td></tr>";
+            for(var city in aqiData) {
+                output=output+"<tr><td>"+city+"</td><td>"+aqiData[city]+"</td><td><button  value='"+city+"'>删除</button></td></tr>"
+            }
+            document.getElementById("aqi-table").innerHTML=output;
     } catch (err) {
         alert(err);
     }
@@ -80,6 +91,4 @@ function init() {
     // 想办法给aqi-table中的所有删除按钮绑定事件，触发delBtnHandle函数
 
 }
-window.onload = function () {
-    init()
-};
+window.onload = init;
